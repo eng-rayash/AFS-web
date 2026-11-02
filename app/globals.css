@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+/* ================================================================
+   نظام التصميم — مؤسسة أحمد فايز الشمري
+   الألوان مستخرجة من الشعار، والخطوط محمّلة محلياً عبر next/font
+   ================================================================ */
+
+@theme {
+  --color-brand: #04569f;
+  --color-accent: #f29715;
+  --color-green: #66bc8b;
+  --color-yellow: #fbe05f;
+
+  --color-deep: #03203c;
+  --color-night: #04172b;
+  --color-night-2: #020d1a;
+  --color-ink: #0d1b2a;
+  --color-mute: #7c8b9a;
+  --color-line: #dce3ea;
+  --color-paper: #ffffff;
+  --color-body: #44586b;
+
+  --font-display: var(--font-hacen), Tahoma, sans-serif;
+  --font-serif: var(--font-thmanyah), Tahoma, "Segoe UI", serif;
+
+  --radius-card: 24px;
+  --radius-hero: 34px;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+    font-weight: 500;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+  /* شريط تمرير بهوية الموقع */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #c3cfdb;
+    border-radius: 999px;
+    border: 3px solid #f1f5f9;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-brand);
+  }
+}
+
+@layer components {
+  /* العنوان العرضي الكبير بتدرّج أبيض — للصفحات الداكنة */
+  .display-gradient {
+    background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, 0.6) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* تلاشي أسفل الصورة المقصوصة في الهيرو */
+  .cutout-mask {
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 26%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 26%);
+  }
+
+  /* شبكة الخريطة في صفحة التواصل */
+  .map-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.35) 1px, transparent 1px);
+    background-size: 52px 52px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 30% 50%, #000, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 70% at 30% 50%, #000, transparent 75%);
+  }
+
+  /* حقول النموذج */
+  .field-input {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 15.5px;
+    color: var(--color-ink);
+    background: #f7fafc;
+    border: 1px solid var(--color-line);
+    border-radius: 14px;
+    padding: 15px 18px;
+    width: 100%;
+    transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+  }
+  .field-input:focus {
+    outline: none;
+    border-color: var(--color-brand);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(4, 86, 159, 0.08);
+  }
+  .field-input[aria-invalid="true"] {
+    border-color: #c0392b;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  /* الشريط المتحرك */
+  .animate-marquee {
+    animation: marquee 40s linear infinite;
+  }
+  .animate-marquee-slow {
+    animation: marquee 60s linear infinite;
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(50%);
+    }
+  }
+}
+
+/* احترام تفضيل تقليل الحركة في كل الحركات المعتمدة على CSS */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee,
+  .animate-marquee-slow {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
